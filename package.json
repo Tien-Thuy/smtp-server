@@ -1,14 +1,14 @@
 {
-  "name": "@tien-thuy/imap-server",
+  "name": "@tien-thuy/smtp-server",
   "version": "0.0.1",
-  "description": "imap server",
+  "description": "smtp server",
   "author": "Huong Da Group",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Tien-Thuy/imap-server.git"
+    "url": "https://github.com/Tien-Thuy/smtp-server.git"
   },
-  "main": "./dist/imap.js",
+  "main": "./dist/smtp.js",
   "scripts": {
     "dev": "nodemon",
     "build": "tsc && npx tsc-alias",
