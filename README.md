@@ -1,15 +1,15 @@
 # <p align="center">Power by Hương Đá Group 🇻🇳 </p>
 
 <p align="center">
-  <img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/tien-thuy/IMAP-server/tests.yml"/>
+  <img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/tien-thuy/SMTP-server/tests.yml"/>
   <a href="https://www.npmjs.com/package/lexical">
-    <img alt="Visit the NPM page" src="https://img.shields.io/npm/v/@tien-thuy/IMAP-server"/>
+    <img alt="Visit the NPM page" src="https://img.shields.io/npm/v/@tien-thuy/SMTP-server"/>
   </a>
 </p>
 
-# Tien Thủy / IMAP Server
+# Tien Thủy / SMTP Server
 
-Provide a simple IMAP server. Ready for production.
+Provide a simple SMTP server. Ready for production.
 
 # Requirements
 
@@ -24,9 +24,9 @@ npm install @tien-thuy/imap-server
 # Usage
 
 ```typescript
-import IMAP from '@tien-thuy/IMAP-server';
+import smtp from '@tien-thuy/smtp-server';
 
-const IMAPServer = new IMAPServer({
+const smtpServer = new SMTPServer({
   host: '127.0.0.1',
   port: 110,
   TLSOptions: {
@@ -41,7 +41,7 @@ const IMAPServer = new IMAPServer({
 |-----------------------|-------------------------------------------|------------|------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `host`                | `true`                                    | `string`   |                              | Hostname of your server, default is `localhost`                                                                                                                                                     |
 | `port`                | `true`                                    | `number`   |                              | Port to listen on, default is `110`                                                                                                                                                                 |
-| `welcomeMessage`      | `false`                                   | `string`   | `Welcome to my IMAP server!` | Welcome message sent to clients upon successful connection.                                                                                                                                         |
+| `welcomeMessage`      | `false`                                   | `string`   | `Welcome to my SMTP server!` | Welcome message sent to clients upon successful connection.                                                                                                                                         |
 | `TLSOptions`.`enable` | `false`                                   | `boolean`  | `false`                      | Enable TLS support, default is `false`. If you want to use TLS, please provide a certificate and key file path in `TLSOptions.certPath` and `TLSOptions.keyPath`, otherwise it will throw an error. |
 | `TLSOptions`.`key`    | `true` if `TLSOptions`.`enable` is `true` | `string`   | `0`                          | Path to private key file, required if `enable` is true                                                                                                                                              |
 | `TLSOptions`.`cert`   | `true` if `TLSOptions`.`enable` is `true` | `string`   | `0`                          | Path to public certificate file, required if `enable` is true                                                                                                                                       |
@@ -61,17 +61,17 @@ const IMAPServer = new IMAPServer({
 |--------------------|----------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
 | `connect`          | `event: { id: string; remoteAddress: string; secure: boolean }`                                                | Emitted when a new connection is established.                                  |
 | `close`            | None                                                                                                           | Emitted when the server is closed.                                             |
-| `LOGIN`            | `event: { connection: IMAPConnection; username: string; password: string; auth: (success: boolean) => void; }` | Emitted when a login attempt is made. Use `auth` to approve or deny the login. |
-| `QUIT`             | `event: IMAPConnection`                                                                                        | Emitted when a quit command is received.                                       |
-| `STAT`             | `connection: IMAPConnection, callback: (messageCount: number, totalSize: number) => void`                      | Emitted when a STAT command is received. Provide number of messages and size.  |
-| `LIST`             | `connection: IMAPConnection, messageNumber?: number, callback: (messages: { number: number; size: number }[]   | Emitted when a LIST command is received. Provides a list of emails.            |
-| `RETR`             | `connection: IMAPConnection, messageNumber: number, callback: (content: string) => void`                       | Emitted when a RETR command is received. Return email content.                 |
-| `DELE`             | `connection: IMAPConnection, messageNumber: number`                                                            | Emitted when a DELETE command is received. Marks the email for deletion.       |
-| `NOOP`             | `connection: IMAPConnection`                                                                                   | Emitted when a NOOP command is received.                                       |
-| `RSET`             | `connection: IMAPConnection`                                                                                   | Emitted when a RSET command is received. Resets all marked deletions.          |
-| `CAPA`             | `connection: IMAPConnection, callback: (capabilities: string[]) => void`                                       | Emitted when a CAPA command is received. Provide server capabilities.          |
-| `connection:close` | `connection: IMAPConnection`                                                                                   | Emitted when a connection is closed.                                           |
-| `data`             | `event: { connection: IMAPConnection; data: Buffer }`                                                          | Emitted when data is received from a connection.                               |
-| `timeout`          | `event: IMAPConnection`                                                                                        | Emitted when a connection times out.                                           |
+| `LOGIN`            | `event: { connection: SMTPConnection; username: string; password: string; auth: (success: boolean) => void; }` | Emitted when a login attempt is made. Use `auth` to approve or deny the login. |
+| `QUIT`             | `event: SMTPConnection`                                                                                        | Emitted when a quit command is received.                                       |
+| `STAT`             | `connection: SMTPConnection, callback: (messageCount: number, totalSize: number) => void`                      | Emitted when a STAT command is received. Provide number of messages and size.  |
+| `LIST`             | `connection: SMTPConnection, messageNumber?: number, callback: (messages: { number: number; size: number }[]   | Emitted when a LIST command is received. Provides a list of emails.            |
+| `RETR`             | `connection: SMTPConnection, messageNumber: number, callback: (content: string) => void`                       | Emitted when a RETR command is received. Return email content.                 |
+| `DELE`             | `connection: SMTPConnection, messageNumber: number`                                                            | Emitted when a DELETE command is received. Marks the email for deletion.       |
+| `NOOP`             | `connection: SMTPConnection`                                                                                   | Emitted when a NOOP command is received.                                       |
+| `RSET`             | `connection: SMTPConnection`                                                                                   | Emitted when a RSET command is received. Resets all marked deletions.          |
+| `CAPA`             | `connection: SMTPConnection, callback: (capabilities: string[]) => void`                                       | Emitted when a CAPA command is received. Provide server capabilities.          |
+| `connection:close` | `connection: SMTPConnection`                                                                                   | Emitted when a connection is closed.                                           |
+| `data`             | `event: { connection: SMTPConnection; data: Buffer }`                                                          | Emitted when data is received from a connection.                               |
+| `timeout`          | `event: SMTPConnection`                                                                                        | Emitted when a connection times out.                                           |
 | `listening`        | `info: { address: string; port: number; secure: boolean }`                                                     | Emitted when the server starts listening for connections.                      |
 | `error`            | `error: Error`                                                                                                 | Emitted when an error occurs.                                                  |
